@@ -1,12 +1,11 @@
 package com.example.qzm.study.function.thread.threadpool;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.*;
 
 /**
  * @ClassName ThreadPoolManager
- * 线程池管理
+ * 线程池创建
+ * 介绍：threadpool_description
  * @Version 1.0
  **/
 public class ThreadPoolManager {
@@ -23,6 +22,8 @@ public class ThreadPoolManager {
     public static void newCachedThreadPool(){
         ExecutorService threadPool = Executors.newCachedThreadPool();
         threadPool.execute(()-> System.out.println("newCachedThreadPool"));
+        //不会立即终止线程池，而是要等所有任务缓存队列中的任务都执行完后才终止，但再也不会接受新的任务
+        threadPool.shutdown();
     }
     /**
      * 创建固定大小的线程池。每次提交一个任务就创建一个线程，直到线程达到线程池的最大大小。
@@ -33,6 +34,8 @@ public class ThreadPoolManager {
     public static void newFixedThreadPool(){
         ExecutorService threadPool = Executors.newFixedThreadPool(1);
         threadPool.execute(()-> System.out.println("newFixedThreadPool"));
+        //不会立即终止线程池，而是要等所有任务缓存队列中的任务都执行完后才终止，但再也不会接受新的任务
+        threadPool.shutdown();
     }
 
     /**
@@ -43,6 +46,8 @@ public class ThreadPoolManager {
     public static void newScheduledThreadPool(){
         ExecutorService threadPool = Executors.newScheduledThreadPool(1);
         threadPool.execute(()-> System.out.println("newScheduledThreadPool"));
+        //立即终止线程池，并尝试打断正在执行的任务，并且清空任务缓存队列，返回尚未执行的任务
+        threadPool.shutdownNow();
     }
 
     /**
@@ -60,4 +65,27 @@ public class ThreadPoolManager {
             System.out.println("newSingleThreadExecutor");
         }
     };
+
+    /**
+     * 自定义线程池创建
+     * @return
+     */
+    public static ExecutorService createThreadPool(){
+        ExecutorService threadPool = new ThreadPoolExecutor(
+                1, //核心线程数量
+                1//最大线程数量
+                , 1, TimeUnit.SECONDS,//线程空闲时间
+                new ArrayBlockingQueue<>(10),//阻塞队列
+                new ThreadFactory() {//线程工厂，主要用来创建线程；
+                    @Override
+                    public Thread newThread(Runnable r) {
+                        return null;
+                    }
+                },
+                new ThreadPoolExecutor.AbortPolicy()//拒绝策略
+
+        );
+        return threadPool;
+    }
+
 }
