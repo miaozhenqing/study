@@ -1,0 +1,56 @@
+ll:列出目录
+
+cd ..   返回上一层
+cd ../.. 返回上两层
+cd test 进入test目录
+
+pwd 显示当前目录
+
+mkdir test  创建test目录
+mkdir -p test1/test2/test3  创建递归目录
+
+rmdir test  删除test空目录
+rmdir -p test1/test2/test3 删除test3,如果test2为空也删除，test1同理
+
+rm -r test1/test2/test3 递归删除（test1/test2/test22 也删除）
+
+cp -r tets2/ /home/admin/study_mzq/myFile   把tets2及其下面的子文件夹都复制到 myFile下
+cp tets2 /home/admin/study_mzq/myFile
+
+
+touch name.txt  新增name.txt文件
+vi name.txt 编辑name.txt文件
+//输入文件内容
+esc 退出编辑
+:wq 保存并退出
+
+cat name.txt 从第一行显示文件内容
+
+tac name.txt 从最后一行往前显示文件内容(和cat相反)
+
+nl name.txt 顺序输出并显示行号
+
+more name.txt 向下翻页
+    空白键 (space)：代表向下翻一页；
+    Enter         ：代表向下翻『一行』；
+    q             ：代表立刻离开 more ，不再显示该文件内容。
+
+less name.txt 翻页，与more类似，可以向前翻
+    空白键    ：向下翻动一页；
+    [pagedown]：向下翻动一页；
+    [pageup]  ：向上翻动一页；
+    /字串     ：向下搜寻『字串』的功能；
+    ?字串     ：向上搜寻『字串』的功能；
+    n         ：重复前一个搜寻 (与 / 或 ? 有关！)
+    N         ：反向的重复前一个搜寻 (与 / 或 ? 有关！)
+    q         ：离开 less 这个程序；
+
+head name.txt 取出文件前几行(默认10行)
+    head -n 20 name.txt 取前20行
+
+tail -n 10 name.txt 取后10行
+    -n ：后面接数字，代表显示几行的意思
+    -f ：表示持续侦测后面所接的档名，要等到按下[ctrl]-c才会结束tail的侦测
+
+
+
