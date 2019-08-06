@@ -1,0 +1,15 @@
+切换调度器的操作符
+
+Reactor 提供了两种在响应式链中调整调度器 Scheduler的方法：publishOn和subscribeOn。它们都接受一个 Scheduler作为参数，从而可以改变调度器。
+但是publishOn在链中出现的位置是有讲究的，而subscribeOn 则无所谓。
+
+
+假设与上图对应的代码是：
+Flux.range(1, 1000)
+.map(...)
+.publishOn(Schedulers.elastic()).filter(...)
+.publishOn(Schedulers.parallel()).flatMap(...)
+.subscribeOn(Schedulers.single())
+
+如图所示，publishOn会影响链中其后的操作符，比如第一个publishOn调整调度器为elastic，则filter的处理操作是在弹性线程池中执行的；同理，flatMap是执行在固定大小的parallel线程池中的；
+subscribeOn无论出现在什么位置，都只影响源头的执行环境，也就是range方法是执行在单线程中的，直至被第一个publishOn切换调度器之前，所以range后的map也在单线程中执行。
