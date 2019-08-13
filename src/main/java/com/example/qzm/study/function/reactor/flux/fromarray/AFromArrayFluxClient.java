@@ -39,6 +39,5 @@ public class AFromArrayFluxClient {
         });
         flux.subscribe(consumer, errorConsumer, thread);
 
-        Arrays.asList(userArray).stream().filter(user -> user.getCount()>1).map(user -> user.getCount());
     }
 }

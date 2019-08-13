@@ -1,0 +1,43 @@
+merge 和 mergeSequential
+merge 和 mergeSequential 操作符用来把多个流合并成一个 Flux 序列。不同之处在于 merge 按照所有流中元素的实际产生顺序来合并，而 mergeSequential 则按照所有流被订阅的顺序，以流为单位进行合并。
+代码清单 11 中分别使用了 merge 和 mergeSequential 操作符。进行合并的流都是每隔 100 毫秒产生一个元素，不过第二个流中的每个元素的产生都比第一个流要延迟 50 毫秒。在使用 merge 的结果流中，来自两个流的元素是按照时间顺序交织在一起；而使用 mergeSequential 的结果流则是首先产生第一个流中的全部元素，再产生第二个流中的全部元素。
+清单 11. merge 和 mergeSequential 操作符使用示例
+Flux.merge(Flux.intervalMillis(0, 100).take(5), Flux.intervalMillis(50, 100).take(5))
+        .toStream()
+        .forEach(System.out::println);
+Flux.mergeSequential(Flux.intervalMillis(0, 100).take(5), Flux.intervalMillis(50, 100).take(5))
+        .toStream()
+        .forEach(System.out::println);
+
+
+
+
+flatMap 和 flatMapSequential
+flatMap 和 flatMapSequential 操作符把流中的每个元素转换成一个流，再把所有流中的元素进行合并。flatMapSequential 和 flatMap 之间的区别与 mergeSequential 和 merge 之间的区别是一样的。
+在代码清单 12 中，流中的元素被转换成每隔 100 毫秒产生的数量不同的流，再进行合并。由于第一个流中包含的元素数量较少，所以在结果流中一开始是两个流的元素交织在一起，然后就只有第二个流中的元素。
+清单 12. flatMap 操作符使用示例
+Flux.just(5, 10)
+        .flatMap(x -> Flux.intervalMillis(x * 10, 100).take(x))
+        .toStream()
+        .forEach(System.out::println);
+
+
+
+正常的消息处理相对简单。当出现错误时，有多种不同的处理策略。第一种策略是通过 onErrorReturn()方法返回一个默认值。在代码清单 16 中，当出现错误时，流会产生默认值 0.
+清单 16. 出现错误时返回默认值
+Flux.just(1, 2)
+        .concatWith(Mono.error(new IllegalStateException()))
+        .onErrorReturn(0)
+        .subscribe(System.out::println);
+第二种策略是通过 switchOnError()方法来使用另外的流来产生元素。在代码清单 17 中，当出现错误时，将产生 Mono.just(0)对应的流，也就是数字 0。
+清单 17. 出现错误时使用另外的流
+Flux.just(1, 2)
+        .concatWith(Mono.error(new IllegalStateException()))
+        .switchOnError(Mono.just(0))
+        .subscribe(System.out::println);
+当出现错误时，还可以通过 retry 操作符来进行重试。重试的动作是通过重新订阅序列来实现的。在使用 retry 操作符时可以指定重试的次数。代码清单 19 中指定了重试次数为 1，所输出的结果是 1，2，1，2 和错误信息。
+清单 19. 使用 retry 操作符进行重试
+Flux.just(1, 2)
+        .concatWith(Mono.error(new IllegalStateException()))
+        .retry(1)
+        .subscribe(System.out::println);

@@ -2,6 +2,8 @@ package com.example.qzm.study.function.reactor.error;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.Random;
 
@@ -10,7 +12,7 @@ import java.util.Random;
  **/
 public class ErrorClient {
     public static void main(String[] args) {
-        onErrorResume();
+        testErrorHandling();
     }
     /**
      * onErrorResume方法能够在收到错误信号的时候提供一个新的数据流
@@ -36,10 +38,13 @@ public class ErrorClient {
     /**
      * i=3时 输出错误
      */
-    public static void testErrorHandling(){
+    public static void testErrorHandling() {
         Flux.range(1, 6)
-                .map(i -> 10/(i-3))
-                .map(i -> i*i)
-                .subscribe(System.out::println, System.err::println);
+                .map(i -> 10 / (i - 3))
+                .map(i -> Math.abs(i))
+                .subscribe(System.out::println
+                        , (throwable) -> System.out.println("............异常................")
+                        , () -> System.out.println("...........完成................"));
+
     }
 }

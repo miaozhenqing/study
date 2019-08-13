@@ -12,13 +12,12 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 /**
- * @ClassName FluxClient
- * @Description TODO
+ * 参考 ：https://www.ibm.com/developerworks/cn/java/j-cn-with-reactor-response-encode/index.html?lnk=hmhm
  * @Version 1.0
  **/
 public class FluxClient {
     public static void main(String[] args) {
-        anyFlux();
+        mergeFlux();
 
     }
 
@@ -166,7 +165,7 @@ public class FluxClient {
         flux1.subscribe(System.out::println);
 
         Mono<String> mono = Mono.just("hi world");
-        mono.subscribe(System.out::println);
+        mono.subscribe(System.out::println,(throwable)-> System.out.println(throwable),()-> System.out.println());
 
         //fromArray方法
         List<String> list = Arrays.asList("hello", "world");
@@ -189,7 +188,14 @@ public class FluxClient {
         Flux<Integer> range = Flux.range(0, 5);
 
         //interval方法, take方法限制个数为5个
+        //take(long n)，take(Duration timespan)和 takeMillis(long timespan)：按照指定的数量或时间间隔来提取。
+        //takeLast(long n)：提取流中的最后 N 个元素。
+        //takeUntil(Predicate<? super T> predicate)：提取元素直到 Predicate 返回 true。
+        //takeWhile(Predicate<? super T> continuePredicate)： 当 Predicate 返回 true 时才进行提取。
+        //takeUntilOther(Publisher<?> other)：提取元素直到另外一个流开始产生元素。
         Flux<Long> longFlux = Flux.interval(Duration.ofSeconds(1)).take(5);
 
     }
+
+
 }
