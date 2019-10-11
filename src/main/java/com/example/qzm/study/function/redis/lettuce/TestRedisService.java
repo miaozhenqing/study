@@ -2,10 +2,12 @@ package com.example.qzm.study.function.redis.lettuce;
 
 import com.example.qzm.study.constant.SystemConstant;
 import io.lettuce.core.KeyValue;
+import io.lettuce.core.RedisURI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -125,5 +127,26 @@ public class TestRedisService {
         map.put("name", "tooooooooooooooom");
         redisManager.redisReactiveCommands().hmset(key, map).subscribe(s -> System.out.println(s));
 
+    }
+
+    /**
+     * 验证同步和异步执行的线程
+     */
+    @PostConstruct
+    public void threadTest() {
+        redisManager.redisCommands().set("threadTestKey1", "threadTestValue1");
+        System.out.println("redisCommands thread:" + Thread.currentThread().getName());
+        redisManager.redisAsyncCommands().set("threadTestKey2", "threadTestValue2").whenCompleteAsync((result, throwable) -> {
+            if (throwable != null) {
+                throwable.printStackTrace();
+            }
+            System.out.println("whenCompleteAsync thread:" + Thread.currentThread().getName());
+        });
+        redisManager.redisAsyncCommands().set("threadTestKey3", "threadTestValue3").whenComplete((result, throwss) -> {
+            if (throwss != null) {
+                throwss.printStackTrace();
+            }
+            System.out.println("whenComplete thread:" + Thread.currentThread().getName());
+        });
     }
 }
