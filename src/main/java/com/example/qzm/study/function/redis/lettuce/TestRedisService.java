@@ -132,7 +132,7 @@ public class TestRedisService {
     /**
      * 验证同步和异步执行的线程
      */
-    @PostConstruct
+//    @PostConstruct
     public void threadTest() {
         redisManager.redisCommands().set("threadTestKey1", "threadTestValue1");
         System.out.println("redisCommands thread:" + Thread.currentThread().getName());

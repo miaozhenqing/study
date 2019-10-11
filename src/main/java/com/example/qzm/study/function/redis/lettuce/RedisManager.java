@@ -38,11 +38,11 @@ public class RedisManager implements IRedisManager {
 
     @PostConstruct
     public void init() {
-        //初始化redis连接
-        this.initConnect(this.createClientResources(), RedisURI.create(SystemConstant.RedisConfig.host, SystemConstant.RedisConfig.port));
-        //初始化redis订阅发布
-        IRedisPubSubListener[] listeners = redisPubSubListeners.toArray(new IRedisPubSubListener[redisPubSubListeners.size()]);
-        this.initPubSub(listeners);
+//        //初始化redis连接
+//        this.initConnect(this.createClientResources(), RedisURI.create(SystemConstant.RedisConfig.host, SystemConstant.RedisConfig.port));
+//        //初始化redis订阅发布
+//        IRedisPubSubListener[] listeners = redisPubSubListeners.toArray(new IRedisPubSubListener[redisPubSubListeners.size()]);
+//        this.initPubSub(listeners);
     }
 
     /**
