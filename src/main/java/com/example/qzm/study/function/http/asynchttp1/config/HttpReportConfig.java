@@ -1,6 +1,6 @@
-package com.example.qzm.study.function.asynchhttp.config;
+package com.example.qzm.study.function.http.asynchttp1.config;
 
-import com.example.qzm.study.function.asynchhttp.service.HttpReportService;
+import com.example.qzm.study.function.http.asynchttp1.service.HttpReportService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -1,15 +1,12 @@
-package com.example.qzm.study.function.asynchhttp.service;
+package com.example.qzm.study.function.http.asynchttp1.example;
 
-import io.netty.channel.Channel;
 import org.asynchttpclient.AsyncCompletionHandlerBase;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.BoundRequestBuilder;
 import org.asynchttpclient.Response;
-import org.asynchttpclient.netty.request.NettyRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ScheduledExecutorService;
@@ -46,7 +43,7 @@ public class HttpReportService {
     }
 
     private AsyncHttpClient buildAsyncHttpClient() {
-        return asyncHttpClient(config().setKeepAlive(true).setRequestTimeout(this.requestTimeOut).setMaxConnections(8));
+        return asyncHttpClient(config().setKeepAlive(true).setMaxConnections(8).setRequestTimeout(this.requestTimeOut));
     }
 
     /**
@@ -193,11 +190,6 @@ public class HttpReportService {
                 requestBuilder.addFormParam(entry.getKey(), String.valueOf(entry.getValue()));
             }
             final long startTime = System.nanoTime();
-
-            System.out.println("总数量 : " + client.getClientStats().getTotalConnectionCount());
-            System.out.println("Active数量 : " + client.getClientStats().getTotalActiveConnectionCount());
-            System.out.println("Idle数量 : " + client.getClientStats().getTotalIdleConnectionCount());
-            System.out.println("------------------------------");
             client.executeRequest(requestBuilder.build(), new AsyncCompletionHandlerBase() {
                 @Override
                 public Response onCompleted(Response response) {
@@ -212,7 +204,6 @@ public class HttpReportService {
                     }
                     return response;
                 }
-
                 @Override
                 public void onThrowable(Throwable t) {
                     String msg = t.getMessage();

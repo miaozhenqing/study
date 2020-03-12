@@ -23,8 +23,8 @@ public class RoleService {
     }
 
     public void insert() {
-//        Role role = new Role("李白", "李白");
-//        repository.insert(role);
+        Role role = new Role("李白2", "李白");
+        repository.insert(role);
     }
 
     public void select(long roleId) {

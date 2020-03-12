@@ -1,8 +1,7 @@
-package com.example.qzm.study.function.asynchhttp.Controller;
+package com.example.qzm.study.function.http.asynchttp1.Controller;
 
-import com.example.qzm.study.function.asynchhttp.service.HttpReportService;
+import com.example.qzm.study.function.http.asynchttp1.service.HttpReportService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
