@@ -27,7 +27,7 @@ public class EventBusService {
                 .asyncEventBusThread(2)
                 .eventSubscribe(absEventHandlers.toArray())
                 .build();
-        log.info("Logic事件功能服务已加载.....");
+        log.info("事件功能服务已加载.....");
     }
 
     /**

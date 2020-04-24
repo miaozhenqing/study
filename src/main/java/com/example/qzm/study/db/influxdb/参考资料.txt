@@ -1,0 +1,15 @@
+https://www.linuxdaxue.com/influxdb-basic-operation.html
+
+一条实际的插入数据如
+
+> insert myapp,host=127.0.0.1,service=app.service.index qps=1340,rt=1313,cpu=45.23,mem="4145m",load=1.21
+> select * from myapp
+name: myapp
+time                cpu   host      load mem   qps  rt   service
+----                ---   ----      ---- ---   ---  --   -------
+1532597158613778583 45.23 127.0.0.1 1.21 4145m 1340 1313 app.service.index
+a. 小结说明
+在insert执行语句中，tag与tag、field与field之间用都好进行分割，tag与field之间用空格分割
+tag的value都是，String类型，不需要加双引号
+field的String类型数据，需要放在双引号中，否则会报错
+如果需要显示添加时间戳，在filed后添加空格，再添加时间戳

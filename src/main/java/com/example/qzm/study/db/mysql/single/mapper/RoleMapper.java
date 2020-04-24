@@ -1,9 +1,10 @@
-package com.example.qzm.study.db.singledb.mapper;
+package com.example.qzm.study.db.mysql.single.mapper;
 
-import com.example.qzm.study.db.singledb.entity.Role;
+import com.example.qzm.study.db.mysql.single.entity.Role;
 import org.apache.ibatis.annotations.*;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +21,8 @@ public interface RoleMapper {
 
     @Select("SELECT * from role where id=#{id}")
     Role select(final @Param("id") long roleId);
+    @Select("SELECT * from role")
+    List<Role> selectAll();
 
     @Delete("delete a from role a where a.id=#{id}")
     void delete(final @Param("id") long roleId);

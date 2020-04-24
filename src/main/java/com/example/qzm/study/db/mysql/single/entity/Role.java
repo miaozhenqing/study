@@ -1,7 +1,4 @@
-package com.example.qzm.study.db.singledb.entity;
-
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
+package com.example.qzm.study.db.mysql.single.entity;
 
 /**
  * @ClassName Role
@@ -10,7 +7,7 @@ import java.util.concurrent.atomic.AtomicLong;
  **/
 public class Role {
     private long id;
-    private String username;
+    private long username;
     private String roleName;
     private int gender;
     private long gold;
@@ -20,11 +17,14 @@ public class Role {
     private long modifyTime;
     private long createTime = System.currentTimeMillis();
 
+    public Role() {
+    }
 
-    public Role(String username, String roleName) {
+    public Role(long username, String roleName) {
         this.username = username;
         this.roleName = roleName;
     }
+
 
     public long getId() {
         return id;
@@ -34,12 +34,12 @@ public class Role {
         this.id = id;
     }
 
-    public String getUserName() {
+    public long getUsername() {
         return username;
     }
 
-    public void setUserName(String userName) {
-        this.username = userName;
+    public void setUsername(long username) {
+        this.username = username;
     }
 
     public String getRoleName() {

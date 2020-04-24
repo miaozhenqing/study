@@ -4,7 +4,7 @@ use study;
 drop table if exists role;
 CREATE TABLE `role` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL,
+  `username` bigint(20) NOT NULL,
   `roleName` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `gender` int(11) DEFAULT '0' COMMENT '性别',
   `level` int(11) DEFAULT '0' COMMENT '等级',

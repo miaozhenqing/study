@@ -18,7 +18,7 @@ import javax.annotation.PostConstruct;
 public class MyController {
     @PostConstruct
     public void init() {
-        System.out.println("Dddddddddddddd");
+
     }
 
     @RequestMapping(value = "/postTest", method = RequestMethod.POST)
